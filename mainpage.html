@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/mainpage.css" />
+    <title>Color Memory Game</title>
+  </head>
+  <body>
+    <header id="header">
+      <button class="rules-btn btn">?</button>
+      <button class="vol-button btn">V.</button>
+    </header>
+    <main id="main">
+      <section class="heading">
+        <h1>Color Memory</h1>
+        <p>Programmed by Jason Iloppa</p>
+      </section>
+      <section class="main-game">
+        <div class="circle">
+          <div class="circle-btn green-btn"></div>
+          <div class="circle-btn red-btn"></div>
+          <div class="circle-btn yellow-btn"></div>
+          <div class="circle-btn blue-btn"></div>
+        </div>
+      </section>
+      <section>
+        <button class="game-start-btn btn" onclick="startGame()">
+          New Game
+        </button>
+      </section>
+    </main>
+    <!-- GAME COUNTDOWN  -->
+    <div id="overlay">
+      <div id="countdown">3</div>
+    </div>
+    <script src="js/mainpage.js"></script>
+  </body>
+</html>
