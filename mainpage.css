@@ -34,6 +34,10 @@ p {
   border-radius: 10px;
 }
 
+.gamepage {
+  display: none;
+}
+
 /* Main */
 #main {
   height: 90vh;
@@ -46,6 +50,7 @@ p {
 
 /* Circle */
 .circle {
+  position: sticky;
   width: 400px;
   height: 400px;
   border-radius: 20%;
@@ -110,10 +115,25 @@ p {
   height: 100%;
   background: rgba(0, 0, 0, 0.7);
   display: none;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   color: white;
   font-size: 5em;
   font-family: Arial, sans-serif;
   z-index: 1000;
+}
+
+/* Game Stuff */
+#game-over-btns {
+  display: none;
+  justify-content: space-evenly;
+}
+
+.game-over-btn {
+  background-color: yellow;
+  color: black;
+  height: 30px;
+  width: 100px;
+  margin: 5px;
 }
