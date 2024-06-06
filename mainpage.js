@@ -12,47 +12,71 @@ function waitForClick() {
   });
 }
 
+let overlayText = document.getElementById("overlay-text");
+let overlay = document.getElementById("overlay");
+let mainpageELementList = document.querySelectorAll(".mainpage");
+let buttonList = document.querySelectorAll(".circle-btn");
+let gamepageElementList = document.querySelectorAll(".gamepage");
+let gamepageHeading = document.getElementById("gamepage-heading");
+let highestScore = 0;
+let highscore = document.getElementById("highscore");
+let overlayOn = overlay.style.display != "none";
+
 async function startGame() {
-  let countdown = document.getElementById("overlay-text");
-  document.getElementById("overlay").style.display = "flex";
+  let countdown = overlayText;
+  countdown.style.display = "flex";
+  overlay.style.display = "flex";
   for (let index = 3; index > 0; index--) {
     countdown.textContent = index;
     await sleep(1);
   }
   countdown.textContent = "START";
   await sleep(1);
-  document.getElementById("overlay").style.display = "none";
-  document.querySelectorAll(".mainpage").forEach((element) => {
+  overlay.style.display = "none";
+  mainpageELementList.forEach((element) => {
     element.style.display = "none";
   });
+  highscore.style.display = "none";
   game();
 }
 
 async function game() {
-  let buttonList = document.querySelectorAll(".circle-btn");
+  gamepageElementList.forEach((element) => {
+    element.style.display = "flex";
+  });
+  document.getElementById("score").textContent = "SCORE: " + 0;
   let buttonOrder = [];
+  let score;
   let lost = false;
 
   while (!lost) {
     let lastButton = buttonList[0];
     let lastButtonColor = lastButton.style.backgroundColor;
     buttonOrder.push(buttonList[Math.floor(Math.random() * 4)]);
-    document.getElementById("heading").textContent = "Watch closely";
+    score = buttonOrder.length - 1;
+    gamepageHeading.textContent = "Watch closely";
     await sleep(1);
     for (let index = 0; index < buttonOrder.length; index++) {
       lastButton.style.backgroundColor = lastButtonColor;
       lastButton = buttonOrder[index];
       lastButtonColor = lastButton.style.backgroundColor;
       buttonOrder[index].style.backgroundColor = "black";
-      await sleep(0.8);
+      await sleep(0.5);
     }
     lastButton.style.backgroundColor = lastButtonColor;
 
     await sleep(0.5);
-    document.getElementById("heading").textContent = "Your turn";
+    gamepageHeading.textContent = "Your turn";
 
     for (let index = 0; index < buttonOrder.length; index++) {
-      const event = await waitForClick(); // Wait for the 'click' event
+      let event;
+      while (true) {
+        event = await waitForClick(); // Wait for the 'click' event
+        if (Array.from(event.target.classList).includes("circle-btn")) {
+          break;
+        }
+      }
+
       console.log(event);
       console.log(buttonOrder[index].className);
 
@@ -65,24 +89,46 @@ async function game() {
       }
     }
     if (!lost) {
-      await sleep(0.5);
       document.getElementById("score").textContent =
         "SCORE: " + buttonOrder.length;
-      if (buttonOrder.length) {
-        document.getElementById("score").style.display = "flex";
-      }
     } else {
+      if (score > highestScore) {
+        highestScore = score;
+      }
       break;
     }
     await sleep(0.5);
   }
   document.getElementById("game-over-btns").style.display = "flex";
-  document.getElementById("overlay-text").textContent = "GAME OVER";
-  document.getElementById("overlay").style.display = "flex";
+  overlayText.textContent = "GAME OVER";
+  overlay.style.display = "flex";
   const event = await waitForClick();
   if (event.target.className === "home game-over-btn") {
-    location.reload();
+    mainpage();
   } else if (event.target.className === "again game-over-btn") {
-    document.getElementById("overlay").style.display = "none";
+    overlay.style.display = "none";
+    game();
   }
+}
+
+function mainpage() {
+  mainpageELementList.forEach((element) => (element.style.display = "flex"));
+  gamepageElementList.forEach((element) => (element.style.display = "none"));
+  overlay.style.display = "none";
+  if (highestScore > 0) {
+    highscore.textContent = "HIGHSCORE: " + highestScore;
+    highscore.style.display = "flex";
+  }
+}
+
+function rules() {
+  overlay.style.display = "flex";
+  document.getElementById("game-over-btns").style.display = "none";
+  overlayText.style.display = "none";
+  document.getElementById("rules").style.display = "flex";
+}
+
+function closeT() {
+  overlay.style.display = "none";
+  document.getElementById("rules").style.display = "none";
 }

@@ -6,6 +6,8 @@
 h1,
 p,
 button {
+  align-items: center;
+  justify-content: center;
   text-transform: uppercase;
   color: aliceblue;
   text-align: center;
@@ -14,6 +16,7 @@ button {
 h1 {
   font-size: xx-large;
   margin-bottom: 0;
+  justify-content: center;
 }
 
 p {
@@ -36,6 +39,13 @@ p {
 
 .gamepage {
   display: none;
+}
+
+#score {
+  width: 200px;
+  height: 40px;
+  text-align: center;
+  justify-content: center;
 }
 
 /* Main */
@@ -136,4 +146,29 @@ p {
   height: 30px;
   width: 100px;
   margin: 5px;
+}
+
+#highscore {
+  display: none;
+}
+
+#rules {
+  display: none;
+}
+
+img {
+  width: 400px;
+  height: 300px;
+}
+
+#rules {
+  align-items: center;
+  flex-direction: column;
+}
+
+#ok {
+  margin-top: 10px;
+  width: 50px;
+  background-color: yellow;
+  color: black;
 }

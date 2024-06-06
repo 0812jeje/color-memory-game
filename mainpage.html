@@ -12,12 +12,13 @@
   </head>
   <body>
     <header id="header">
-      <button class="rules-btn btn">?</button>
+      <button class="rules-btn btn" onclick="rules()">?</button>
       <button class="vol-button btn">V.</button>
     </header>
     <main id="main">
-      <section>
-        <h1 id="heading">Color Memory</h1>
+      <section class="heading">
+        <h1 class="gamepage" id="gamepage-heading"></h1>
+        <h1 class="mainpage" id="mainpage-heading">Color Memory</h1>
         <p class="mainpage">Programmed by Jason Iloppa</p>
       </section>
       <section class="main-game">
@@ -42,7 +43,16 @@
         <button class="home game-over-btn">QUIT</button>
         <button class="again game-over-btn">TRY AGAIN</button>
       </div>
+      <div id="rules">
+        <h1>GAME RULES</h1>
+        <p>Repeat the upcoming sequences of signals</p>
+        <img src="obame.png" alt="Rules" />
+        <button id="ok" onclick="closeT()">OK</button>
+      </div>
     </div>
+    <footer id="footer">
+      <h2 id="highscore">HIGHSCORE:</h2>
+    </footer>
     <script src="mainpage.js"></script>
   </body>
 </html>
