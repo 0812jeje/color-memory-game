@@ -4,8 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" href="css/mainpage.css" />
-
     <link rel="stylesheet" href="mainpage.css" />
 
     <title>Color Memory Game</title>
@@ -23,10 +21,10 @@
       </section>
       <section class="main-game">
         <div class="circle">
-          <div class="circle-btn green-btn"></div>
-          <div class="circle-btn red-btn"></div>
-          <div class="circle-btn yellow-btn"></div>
-          <div class="circle-btn blue-btn"></div>
+          <div class="circle-btn green-btn" data-sound="sounds/c.wav"></div>
+          <div class="circle-btn red-btn" data-sound="sounds/f.wav"></div>
+          <div class="circle-btn yellow-btn" data-sound="sounds/g.wav"></div>
+          <div class="circle-btn blue-btn" data-sound="sounds/d.wav"></div>
         </div>
       </section>
       <section class="footing">
@@ -53,6 +51,7 @@
     <footer id="footer">
       <h2 id="highscore">HIGHSCORE:</h2>
     </footer>
+    <audio id="audio" style="display: none"></audio>
     <script src="mainpage.js"></script>
   </body>
 </html>

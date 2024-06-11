@@ -65,7 +65,7 @@ async function game() {
     }
     lastButton.style.backgroundColor = lastButtonColor;
 
-    await sleep(0.5);
+    //await sleep(0.5);
     gamepageHeading.textContent = "Your turn";
 
     for (let index = 0; index < buttonOrder.length; index++) {
@@ -97,9 +97,10 @@ async function game() {
       }
       break;
     }
-    await sleep(0.5);
+    //await sleep(0.5);
   }
   document.getElementById("game-over-btns").style.display = "flex";
+  overlayText.style.display = "flex";
   overlayText.textContent = "GAME OVER";
   overlay.style.display = "flex";
   const event = await waitForClick();
@@ -132,3 +133,17 @@ function closeT() {
   overlay.style.display = "none";
   document.getElementById("rules").style.display = "none";
 }
+
+document.querySelectorAll(".circle-btn").forEach((button) => {
+  button.addEventListener("click", function () {
+    console.log("SOUND");
+    var soundFile = this.getAttribute("data-sound");
+    var audio = document.getElementById("audio");
+    audio.src = soundFile;
+    audio.currentTime = 0; // Start from the beginning
+    audio.play();
+    sleep(0.5);
+    audio.pause();
+    audio.currentTime = 0;
+  });
+});
