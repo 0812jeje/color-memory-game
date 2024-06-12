@@ -21,6 +21,7 @@ let gamepageHeading = document.getElementById("gamepage-heading");
 let highestScore = 0;
 let highscore = document.getElementById("highscore");
 let overlayOn = overlay.style.display != "none";
+let playMode = false;
 
 async function startGame() {
   let countdown = overlayText;
@@ -50,18 +51,30 @@ async function game() {
   let lost = false;
 
   while (!lost) {
+    playMode = false;
     let lastButton = buttonList[0];
     let lastButtonColor = lastButton.style.backgroundColor;
     buttonOrder.push(buttonList[Math.floor(Math.random() * 4)]);
     score = buttonOrder.length - 1;
     gamepageHeading.textContent = "Watch closely";
-    await sleep(1);
+    await sleep(0.5);
     for (let index = 0; index < buttonOrder.length; index++) {
       lastButton.style.backgroundColor = lastButtonColor;
       lastButton = buttonOrder[index];
       lastButtonColor = lastButton.style.backgroundColor;
-      buttonOrder[index].style.backgroundColor = "black";
       await sleep(0.5);
+      buttonOrder[index].style.backgroundColor = "black";
+      var soundFile = buttonOrder[index].getAttribute("data-sound");
+      var audio = document.getElementById("audio");
+      audio.src = soundFile;
+      audio.currentTime = 0; // Start from the beginning
+      audio.play();
+
+      setTimeout(function () {
+        audio.pause();
+        audio.currentTime = 0; // Reset the audio to the start
+      }, 300); // 500 milliseconds = 0.5 seconds
+      await sleep(0.4);
     }
     lastButton.style.backgroundColor = lastButtonColor;
 
@@ -70,6 +83,7 @@ async function game() {
 
     for (let index = 0; index < buttonOrder.length; index++) {
       let event;
+      playMode = true;
       while (true) {
         event = await waitForClick(); // Wait for the 'click' event
         if (Array.from(event.target.classList).includes("circle-btn")) {
@@ -85,6 +99,7 @@ async function game() {
       } else {
         console.log("Incorrect element clicked.");
         lost = true;
+        playMode = false;
         break;
       }
     }
@@ -97,7 +112,6 @@ async function game() {
       }
       break;
     }
-    //await sleep(0.5);
   }
   document.getElementById("game-over-btns").style.display = "flex";
   overlayText.style.display = "flex";
@@ -136,14 +150,17 @@ function closeT() {
 
 document.querySelectorAll(".circle-btn").forEach((button) => {
   button.addEventListener("click", function () {
-    console.log("SOUND");
-    var soundFile = this.getAttribute("data-sound");
-    var audio = document.getElementById("audio");
-    audio.src = soundFile;
-    audio.currentTime = 0; // Start from the beginning
-    audio.play();
-    sleep(0.5);
-    audio.pause();
-    audio.currentTime = 0;
+    if (playMode) {
+      var soundFile = this.getAttribute("data-sound");
+      var audio = document.getElementById("audio");
+      audio.src = soundFile;
+      audio.currentTime = 0; // Start from the beginning
+      audio.play();
+
+      setTimeout(function () {
+        audio.pause();
+        audio.currentTime = 0; // Reset the audio to the start
+      }, 300); // 500 milliseconds = 0.5 seconds
+    }
   });
 });
